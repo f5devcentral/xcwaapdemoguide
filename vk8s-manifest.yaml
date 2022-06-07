@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dockerio
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkb2NrZXIuaW8iOnsidXNlcm5hbWUiOiJpbnRlcmVzdGluZ3N0b3JhZ2UiLCJwYXNzd29yZCI6IjMwZTRjYThmLWEwMzUtNDRkNS1hZDQyLWY5NDg3YjcwMjFiNSIsImF1dGgiOiJhVzUwWlhKbGMzUnBibWR6ZEc5eVlXZGxPak13WlRSallUaG1MV0V3TXpVdE5EUmtOUzFoWkRReUxXWTVORGczWWpjd01qRmlOUT09In19fQ==
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: star-ratings-app
+  labels:
+    app: star-ratings-app
+spec:
+  selector:
+    matchLabels:
+      app: star-ratings-app
+  template:
+    metadata:
+      labels:
+        app: star-ratings-app
+    spec:
+      containers:
+        - name: server
+          image: interestingstorage/star-ratings-app:guide-latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+      imagePullSecrets:
+        - name: dockerio
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: star-ratings-app
+spec:
+  type: ClusterIP
+  selector:
+    app: star-ratings-app
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
