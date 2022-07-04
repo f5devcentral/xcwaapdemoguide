@@ -1,0 +1,344 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/ping": {
+      "get": {
+        "operationId": "AppController_ping",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "operationId": "IndexController_root",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/newItem": {
+      "get": {
+        "operationId": "NewItemController_root",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "operationId": "NewItemController_newItem",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/itemInfo/{id}": {
+      "get": {
+        "operationId": "ItemInfoController_root",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/rating-item": {
+      "put": {
+        "operationId": "RatingItemController_create",
+        "parameters": [
+          
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatingItemCreateInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatingItemObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "RatingItemListController_list",
+        "parameters": [
+          
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RatingItemObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rating-item/{id}": {
+      "get": {
+        "operationId": "RatingItemController_read",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Rating item id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatingItemObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "RatingItemController_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Rating item id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/rating-item/{id}/history": {
+      "put": {
+        "operationId": "RatingItemHistoryController_create",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Rating item id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatingItemHistoryCreateDtoInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatingItemHistoryObject"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "RatingItemHistoryController_list",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Rating item id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RatingItemHistoryObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rating-item/{id}/avg": {
+      "get": {
+        "operationId": "RatingItemHistoryController_avg",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Rating item id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatingItemHistoryObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Rating API Sample",
+    "description": "API sample as rating services",
+    "version": "1.0",
+    "contact": {
+      
+    }
+  },
+  "tags": [
+    
+  ],
+  "servers": [
+    
+  ],
+  "components": {
+    "schemas": {
+      "RatingItemCreateInput": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text of the item to rate"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "RatingItemObject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Rating item ID"
+          },
+          "text": {
+            "type": "string",
+            "description": "Rating item text"
+          }
+        },
+        "required": [
+          "id",
+          "text"
+        ]
+      },
+      "RatingItemHistoryCreateDtoInput": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number",
+            "description": "Rating to add to the item"
+          }
+        },
+        "required": [
+          "rating"
+        ]
+      },
+      "RatingItemHistoryObject": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number",
+            "description": "Item rating"
+          },
+          "timestamp": {
+            "type": "number",
+            "description": "Timestamp when item rating was added"
+          }
+        },
+        "required": [
+          "rating",
+          "timestamp"
+        ]
+      }
+    }
+  }
+}
