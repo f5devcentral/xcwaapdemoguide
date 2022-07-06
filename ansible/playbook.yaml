@@ -1,0 +1,261 @@
+- name: Configure Star Ratings application on XC Cloud
+  hosts: webservers
+  collections:
+    - yoctoalex.xc_cloud_modules
+    - kubernetes.core
+  connection: local
+
+  environment:
+      XC_API_TOKEN: "your_api_token"
+      XC_TENANT: "console.ves.volterra.io"
+
+  vars:
+      namespace: "starratings"
+      prefix: "star-ratings"
+      domain: "star-ratings.example.com"
+      vk8s: "demo-vk8s"
+
+  tasks:
+    - name: fetch current tenant details
+      fetch_tenant_settings:
+      register: tenant
+
+    - name: create namespace
+      namespace:
+        state: present
+        wait: True
+        metadata:
+          name: "{{ namespace }}"
+
+    - name: create vk8s
+      virtual_kubernetes:
+        state: present
+        wait: True
+        metadata:
+          namespace: "{{ namespace }}"
+          name: "{{ vk8s }}"
+        spec:
+          vsite_refs:
+            - kind: "virtual_site"
+              tenant: "ves-io"
+              namespace: "shared"
+              name: "ves-io-all-res"
+
+    - name: create vk8s credentials
+      api_credentials:
+        state: present
+        expiration_days: 5
+        name: "{{ vk8s }}-credentials"
+        spec:
+          api_type: "KUBE_CONFIG"
+          virtual_k8s_name: "{{ vk8s }}"
+          virtual_k8s_namespace: "{{ namespace }}"
+      register: credentials
+
+    - name: create kubeconfig file
+      copy:
+        content: "{{ credentials.data | b64decode }}"
+        dest: "./kubeconfig.yaml"
+
+    - name: create a deployment
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        src: "../vk8s-manifest.yaml"
+        kubeconfig: "kubeconfig.yaml"
+
+    - name: revoke vk8s credentials
+      api_credentials:
+        state: absent
+        name: "{{ credentials.name }}"
+
+    - name: cleanup kubeconfig
+      file:
+        state: absent
+        path: "./kubeconfig.yaml"
+
+    - name: create origin pool
+      origin_pool:
+        state: present
+        metadata:
+          namespace: "{{ namespace }}"
+          name: "{{ prefix }}-pool"
+        spec:
+          origin_servers:
+            - k8s_service:
+                service_name: "star-ratings-app.{{ namespace }}"
+                site_locator:
+                  virtual_site:
+                    tenant: "ves-io"
+                    namespace: "shared"
+                    name: "ves-io-all-res"
+                vk8s_networks:
+          port: 8080
+          loadbalancer_algorithm: "LB_OVERRIDE"
+          endpoint_selection: "LOCAL_PREFERRED"
+
+    - name: create load balancer
+      http_loadbalancer:
+        state: present
+        metadata:
+          namespace: "{{ namespace }}"
+          name: "{{ prefix }}-lb"
+        spec:
+          domains:
+            - "{{ domain }}"
+          http:
+            port: 80
+          default_route_pools:
+            - pool:
+                tenant: "{{ tenant.name }}"
+                namespace: "{{ namespace }}"
+                name: "{{ prefix }}-pool"
+              weight: 1
+              priority: 1
+
+    - name: create app firewall
+      application_firewall:
+        state: present
+        metadata:
+          namespace: "{{ namespace }}"
+          name: "{{ prefix }}-fw"
+        spec:
+          blocking: {}
+          detection_settings:
+            signature_selection_setting:
+              attack_type_settings:
+                disabled_attack_types:
+                  - "ATTACK_TYPE_COMMAND_EXECUTION"
+              high_medium_low_accuracy_signatures: {}
+            enable_suppression: { }
+            enable_threat_campaigns: { }
+            violation_settings:
+              disabled_violation_types:
+                - "VIOL_HTTP_PROTOCOL_BAD_HTTP_VERSION"
+          bot_protection_setting:
+            malicious_bot_action: "BLOCK"
+            suspicious_bot_action: "REPORT"
+            good_bot_action: "REPORT"
+          allow_all_response_codes: {}
+          default_anonymization: {}
+          blocking_page:
+            response_code: "Forbidden"
+            blocking_page: "string:///PGh0bWw+PGhlYWQ+PHRpdGxlPlJlcXVlc3QgUmVqZWN0ZWQ8L3RpdGxlPjwvaGVhZD48Ym9keT5UaGUgcmVxdWVzdGVkIFVSTCB3YXMgcmVqZWN0ZWQuIFBsZWFzZSBjb25zdWx0IHdpdGggeW91ciBhZG1pbmlzdHJhdG9yLjxici8+PGJyLz5Zb3VyIHN1cHBvcnQgSUQgaXM6IHt7cmVxdWVzdF9pZH19PGJyLz48YnIvPjxhIGhyZWY9ImphdmFzY3JpcHQ6aGlzdG9yeS5iYWNrKCkiPltHbyBCYWNrXTwvYT48L2JvZHk+PC9odG1sPg=="
+
+    - name: update load balancer with firewall details
+      http_loadbalancer:
+        state: present
+        patch: True
+        metadata:
+          namespace: "{{ namespace }}"
+          name: "{{ prefix }}-lb"
+        spec:
+          disable_waf:
+          app_firewall:
+            tenant: "{{ tenant.name }}"
+            namespace: "{{ namespace }}"
+            name: "{{ prefix }}-fw"
+
+    - name: upload swagger file
+      stored_object:
+        state: present
+        string_value: "{{ lookup('file', '../swagger.json') | string }}"
+        content_format: "json"
+        name: "{{ prefix }}-swagger"
+        object_type: "swagger"
+        namespace: "{{ namespace }}"
+      register: swagger_file
+
+    - name: create api definition
+      api_definition:
+        state: present
+        metadata:
+          namespace: "{{ namespace }}"
+          name: "{{ prefix }}-api-def"
+        spec:
+          swagger_specs:
+            - "{{ swagger_file.metadata.url }}"
+      register: api_definition
+
+    - name: create service policy
+      service_policy:
+        state: present
+        metadata:
+          namespace: "{{ namespace }}"
+          name: "{{ prefix }}-policy"
+        spec:
+          algo: "FIRST_MATCH"
+          any_server: {}
+          rule_list:
+            rules:
+              - metadata:
+                  name: "deny-all-except-api"
+                spec:
+                  action: "DENY"
+                  path:
+                    prefix_values:
+                      - "/api/v1/"
+                  api_group_matcher:
+                    match:
+                      - "ves-io-api-def-{{ prefix }}-api-def-all-operations"
+                    invert_matcher: True
+                  challenge_action: "DEFAULT_CHALLENGE"
+                  waf_action:
+                    none: {}
+              - metadata:
+                  name: "allow-other"
+                spec:
+                  action: "ALLOW"
+                  challenge_action: "DEFAULT_CHALLENGE"
+                  waf_action:
+                    none: { }
+
+    - name: update load balancer with service policy and api definition
+      http_loadbalancer:
+        state: present
+        patch: True
+        metadata:
+          namespace: "{{ namespace }}"
+          name: "{{ prefix }}-lb"
+        spec:
+          no_service_policies: null
+          service_policies_from_namespace: null
+          disable_api_definition: null
+          active_service_policies:
+            policies:
+              - tenant: "{{ tenant.name }}"
+                namespace: "{{ namespace }}"
+                name: "{{ prefix }}-policy"
+          api_definition:
+            tenant: "{{ tenant.name }}"
+            namespace: "{{ namespace }}"
+            name: "{{ prefix }}-api-def"
+
+    - name: update load balancer with bot defense configuration
+      http_loadbalancer:
+        state: present
+        patch: True
+        metadata:
+          namespace: "{{ namespace }}"
+          name: "{{ prefix }}-lb"
+        spec:
+          bot_defense:
+            regional_endpoint: "US"
+            policy:
+              protected_app_endpoints:
+                - metadata:
+                    name: "{{ prefix }}-bot-defense"
+                  http_methods:
+                    - "PUT"
+                    - "POST"
+                  protocol: "BOTH"
+                  path:
+                    prefix: "/api/v1/"
+                  mitigation:
+                    block:
+                      status: "Forbidden"
+                      body: "string:///VGhlIHJlcXVlc3RlZCBVUkwgd2FzIHJlamVjdGVkLiBQbGVhc2UgY29uc3VsdCB3aXRoIHlvdXIgYWRtaW5pc3RyYXRvci4="
+              js_insert_all_pages:
+                javascript_location: "AFTER_HEAD"
+              js_download_path: "/common.js"
+            timeout: 1000
