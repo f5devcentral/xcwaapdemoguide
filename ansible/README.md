@@ -1,4 +1,4 @@
-Installation instaructions
+Installation instructions
 ------------ 
 
 Install ansible galaxy collections and python dependencies:
