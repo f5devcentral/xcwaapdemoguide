@@ -15,7 +15,7 @@ Use this guide and the provided sample app & tools to explore the Web App & API 
 
 The guide provides two paths for setting up the baseline demo environments and configuration of xC during the demo:
 - *PATH 1: Manual configuration* via the web-based Distributed Cloud Console
-- *PATH 2: Automated configuration* via included Ansible scripts [link]
+- *PATH 2: Automated configuration* via included  `Ansible scripts <./ansible/README.md>`_
 
 Scenario
 ####################
@@ -45,7 +45,7 @@ Pre-requisites
 
 *PATH 2: Automated Configuration*
 - Linux-based system (or on Windows run the Subsystem For Linux) with configured Ansible binaries
-- Follow the Ansible section of the guide [link]
+- Follow the `Ansible section <./ansible/README.md>`_ of the guide 
 
 PATH 1: Manual Config of the Demo Environment Configuration via xC Console
 ###########################################################################
@@ -185,7 +185,7 @@ Great, your sample app should be live and you should be ready to go through the 
 PATH 2: Automated Config of the Demo Environment Configuration via Ansible
 #############################################################################
 
-Folow the [link] README to configure the Ansible modules. 
+Folow the `README <./ansible/README.md>`_ to configure the Ansible modules. 
 Follow the automated configuration steps below to perform equivalent steps to the manual config above.  
 
 
