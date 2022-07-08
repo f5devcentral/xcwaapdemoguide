@@ -571,7 +571,7 @@ In the screenshot below you can see the analytics for our simulated traffic and 
 
 .. figure:: assets/ddos_demo_2.png
 
-Wrap-UP
+Wrap-Up
 #######
 
 At this stage you should have set up a sample app and sent traffic to it. You've configured and applied F5 Distributed Cloud WAAP services in order to protect both the Web & API of the app from malicious actors & bots. We also looked at the telemetry and insights from the data in the various Dashboards & security events.
