@@ -1,3 +1,5 @@
+# Demo environment configuration 
+
 - name: Configure Star Ratings application on XC Cloud
   hosts: webservers
   collections:
@@ -112,6 +114,8 @@
                 name: "{{ prefix }}-pool"
               weight: 1
               priority: 1
+
+# WAAP use-case demo steps -- comment out sections below as needed for demo
 
     - name: create app firewall
       application_firewall:
