@@ -6,8 +6,6 @@ Install ansible galaxy collections and python dependencies:
 ```shell
   ansible-galaxy collection install yoctoalex.xc_cloud_modules
   ansible-galaxy collection install kubernetes.core
-  ansible-galaxy collection install community.kubernetes
-  ansible-galaxy collection install cloud.common
   pip3 install kubernetes
 ```
 
