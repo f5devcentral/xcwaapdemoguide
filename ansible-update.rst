@@ -14,15 +14,16 @@ Use this guide and the provided sample app & tools to explore the Web App & API 
 - DoS/DDoS mitigation
 
 The guide provides two paths for setting up the baseline demo environments and configuration of xC during the demo:
+
 - *PATH 1: Manual configuration* via the web-based Distributed Cloud Console
 - *PATH 2: Automated configuration* via included  `Ansible scripts <./ansible/README.md>`_
-
+  
 Scenario
 ####################
 We’ll use a representative customer app scenario: a Star Ratings application which collects user ratings and reviews/comments on various items (eCommerce, customer service use-cases, etc.). This app is running on Kubernetes, and can be deployed on any cloud, but for the purposes of the demo guide we will deploy it on xC virtual Kubernetes (vK8s) and protect it with xC WAAP.
 
 Scenario Architecture
-####################
+#######################
 The xC WAAP is a set of managed security services which provides a holistic set of protection for distributed app services. In our scenario the app services are deployed across multiple vK8s pods in different xC vK8s regions served by F5 Global PoPs in order to represent a distributed workload; the same model would apply to any similar deployment on any cloud(s).
 
 The demo is intended to be self-sufficient as a quick way to onramp onto xC platform with a typical sample app deployed in a docker container, and managed via xC services. A separate custom-built "utility" tools service is also included, which provides the tooling that generates simulated user traffic as well as attacks (such as WAF or Bot) to help illustrate different WAAP use-cases. 
@@ -40,12 +41,13 @@ Pre-requisites
 - F5 Distributed Cloud Account (trial is sufficient for this demo guide)
 
 *PATH 1: Manual Configuration* 
+
 - A Web browser to acces the F5 Distributed Cloud console
 - The command-line interface (cli) Kubernetes management tool: `kubectl <https://kubernetes.io/docs/tasks/tools/#kubectl>`_
 
 *PATH 2: Automated Configuration*
 - Linux-based system (or on Windows run the Subsystem For Linux) with configured Ansible binaries
-- Follow the `Ansible section <./ansible/README.md>`_ of the guide 
+- Follow the `Ansible section <#path-2-automated-config-of-the-demo-environment-configuration-via-ansible>`_ of the guide 
 
 PATH 1: Manual Config of the Demo Environment Configuration via xC Console
 ###########################################################################
@@ -185,8 +187,11 @@ Great, your sample app should be live and you should be ready to go through the 
 PATH 2: Automated Config of the Demo Environment Configuration via Ansible
 #############################################################################
 
-Folow the `README <./ansible/README.md>`_ to configure the Ansible modules. 
-Follow the automated configuration steps below to perform equivalent steps to the manual config above.  
+Follow the `README <./ansible/README.md>`_ to configure the Ansible environment. You will need to configure the required Ansible Galaxy collections, tokens, and also update the *playbook.yaml* section in the beginning of the playbook that captures xC environment settings.
+
+Once configured, we recommend you review *playbook.yaml* sections, and pick those you'd like to run (such as environment setup), and comment out the rest. Of course, you can choose to run the entire playbook -- that will go through and do all of the setup & demo config steps automatically from beginning to end. 
+
+Thus, we suggest you comment out the *WAAP use-case demo steps* section and those that follow in the *playbook*, and then decide if you want to run through the WAAP use-cases below manually, or use Ansible to do the config by uncommenting the relevant sections. 
 
 
 WAAP Use-Case Demos
