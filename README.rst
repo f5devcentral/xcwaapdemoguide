@@ -5,39 +5,57 @@
 
 Objective
 ####################
-Use this guide and provided tools & assets to explore the Web App & API Protection (WAAP) capabilities of the F5 Distributed Cloud platform (xC). This will help you get started with several WAAP use-cases: 
+Use this guide and the provided sample app & tools to explore the Web App & API Protection (WAAP) capabilities of the F5 Distributed Cloud platform (xC). This will help you get started with several WAAP use-cases: 
 
-- WAF
-- API Discovery
-- API Protection
+- Web App Firewall (WAF)
+- API Discovery & Protection
 - Load Balancer Service Policies
-- Bot mitigation 
+- Bot mitigation
+- DoS/DDoS mitigation
 
+The guide provides two paths for setting up the baseline demo environments and configuration of xC during the demo:
+
+- *PATH 1: Manual configuration* via the web-based Distributed Cloud Console
+- *PATH 2: Automated configuration* via included  `Ansible scripts <./ansible/README.md>`_
+  
 Scenario
 ####################
 We’ll use a representative customer app scenario: a Star Ratings application which collects user ratings and reviews/comments on various items (eCommerce, customer service use-cases, etc.). This app is running on Kubernetes, and can be deployed on any cloud, but for the purposes of the demo guide we will deploy it on xC virtual Kubernetes (vK8s) and protect it with xC WAAP.
 
 Scenario Architecture
-####################
+#######################
 The xC WAAP is a set of managed security services which provides a holistic set of protection for distributed app services. In our scenario the app services are deployed across multiple vK8s pods in different xC vK8s regions served by F5 Global PoPs in order to represent a distributed workload; the same model would apply to any similar deployment on any cloud(s).
 
-The demo is intended to be self-sufficient as a quick way to onramp onto xC platform with a representative app services deployed in a docker container. Another service located in our cloud and includes tooling that generates user traffic, and provides a framework for attacks and launching of bot attacks to illustrate different WAAP use-cases. 
+The demo is intended to be self-sufficient as a quick way to onramp onto xC platform with a typical sample app deployed in a docker container, and managed via xC services. A separate custom-built "utility" tools service is also included, which provides the tooling that generates simulated user traffic as well as attacks (such as WAF or Bot) to help illustrate different WAAP use-cases. 
 
-App docker container: contains the Start Ratings app that consists of a simple backend service that exposes and API, and a front-end that consumes the API. 
+*App docker container*: contains the Start Ratings app that consists of a simple backend service that exposes and API, and a front-end that consumes the API. 
 
-Tools service: contains scripts and services with a simple HTML "tools" page in the tools container that will accept parameters such as APP URL, also provide stop/start traffic, attacks maybe, stop/start bot, etc.
+*Tools service*: contains scripts & utilities in a simple web-based service that will accept sample app URL, stop/start user & attack traffic, stop/start bot attacks, etc.
 
 .. figure:: assets/waap_overview.png
 
-Demo Environment Configuration
-####################
 
 Pre-requisites
+#################
 
-First we will need to create a Virtual kubernetes cluster, and then we will move on to creating an HTTP load balancer with pool and origin server configuration.
+- F5 Distributed Cloud Account (trial is sufficient for this demo guide)
 
-Create Virtual kubernetes cluster
-********************************
+*PATH 1: Manual Configuration* 
+
+- A Web browser to acces the F5 Distributed Cloud console
+- The command-line interface (cli) Kubernetes management tool: `kubectl <https://kubernetes.io/docs/tasks/tools/#kubectl>`_
+
+*PATH 2: Automated Configuration*
+- Linux-based system (or on Windows run the Subsystem For Linux) with configured Ansible binaries
+- Follow the `Ansible section <#path-2-automated-config-of-the-demo-environment-configuration-via-ansible>`_ of the guide 
+
+PATH 1: Manual Config of the Demo Environment Configuration via xC Console
+###########################################################################
+
+In order to deploy the sample application, we first need to create a Virtual kubernetes cluster within xC. Once created, we will set up and configure an HTTP load balancer with pool and origin server configuration. Follow the below steps to set up vK8s & then the HTTP Load Balancer.
+
+Create Virtual Kubernetes (vK8s) cluster
+*****************************************
 
 Once logged in the F5 Distributed Cloud Console, navigate to **Distributed Apps**:
 
@@ -47,18 +65,15 @@ Then proceed to **Virtual K8s** and click the **Add Virtual K8s** button. This w
 
 .. figure:: assets/vk8s_create.png
 
-
 Now let's fill in the form. First, give the vK8s a name.
 
 .. figure:: assets/vk8s_cluster_name.png
-
 
 And then click the **Select Vsite Ref** button to assign Virtual Sites. Vsite Ref is the virtual-site reference of locations on the F5 Global Network where vK8s will be instantiated. 
 
 .. figure:: assets/vk8s_cluster_vsite_ref.png
 
-
-Check the default virtual site for our vK8s - **ves-io-all-res**. It covers all regional edge sites across F5 ADN.   
+Check the default virtual site for our vK8s - **ves-io-all-res**. It covers all regional edge sites across F5 Application Delivery Network (ADN).  
 
 .. figure:: assets/vk8s_cluster_vsite_selected.png
 
@@ -66,7 +81,7 @@ And then click **Save and Exit** to complete creating the vK8s cluster in all F5
 
 .. figure:: assets/vk8s_save_and_exit.png
 
-The process of creating a vK8s cluster takes just a minute, and after that you will be all set to deploy and distribute app workloads onto this new infrastructure. There are two ways to deploy into F5 Distributed Cloud services: using the User Interface (UI) with F5 Distributed Cloud Console or with a Command Line Interface (CLI) via Kubectl. In this demo we are using **Kubectl**.
+The process of creating a vK8s cluster takes just a minute, and after that you will be all set to deploy and distribute app workloads onto this new Kubernetes infrastructure. There are two ways to deploy into F5 Distributed Cloud services: using the User Interface (UI) with F5 Distributed Cloud Console or with a Command Line Interface (CLI) via Kubectl. In this guide we will use **Kubectl**.
 
 First, we will need a kubeconfig file for our cluster. Kubeconfig stores information about clusters, users, namespaces, and authentication mechanisms. To get the Kubeconfig, open the drop-down menu and select **Kubeconfig** to download it.     
 
@@ -77,9 +92,9 @@ The Kubeconfig will be downloaded with the default certificate expiration date. 
 .. figure:: assets/vk8s_kubeconfig_download.png
    :width: 500px
 
-For the next step you need to install `kubectl tool <https://kubernetes.io/docs/tasks/tools/#kubectl>`_.
+For the next step you need to have the `kubectl tool <https://kubernetes.io/docs/tasks/tools/#kubectl>`_.
 
-After that open CLI and execute a command to deploy the test app. Type path to the downloaded credentials file for the kubeconfig parameter. **vk8s-manifest.yaml** you can find in the repository.
+In your client environemtn, open the command line interface (cli) and run the **kubectl** tool to execute a command to deploy the sample app. Type the path to the downloaded credentials file for the kubeconfig parameter. **vk8s-manifest.yaml** you can find in this project repository.
 
 ```
 kubectl --kubeconfig {{ path to the credentials file  }} apply -f vk8s-manifest.yaml
@@ -89,10 +104,10 @@ kubectl --kubeconfig {{ path to the credentials file  }} apply -f vk8s-manifest.
    :width: 600px
 
 
-HTTP Load Balancer
-******************
+Set up the HTTP Load Balancer
+******************************
 
-Next, we will need to make our new workload accessible by configuring the HTTP Load Balancing settings for our app. We will create origin pool for the services. Origin pools consist of endpoints and clusters, as well as routes and advertise policies that are required to make the application available to the internet.
+Next, we will need to make our sample app workload accessible by configuring HTTP Load Balancing settings for our app. We will create an origin pool for the services. Origin pools consist of endpoints and clusters, as well as routes and advertising policies that are required to make the application available to the internet.
 
 Back in the F5 Distributed Cloud Console navigate to  the **Load Balancers** service in the service menu. 
 
@@ -109,7 +124,7 @@ Click the **Add HTTP Load Balancer** button to open the form of HTTP Load Balanc
 .. figure:: assets/load_balancer_create_click.png
    :width: 600px
 
-Then enter name for the load balancer.
+Then enter a name for the load balancer.
 
 .. figure:: assets/httplb_set_name.png
 
@@ -127,7 +142,7 @@ Then open the drop-down menu and click **Create new Origin Pool**.
 
 .. figure:: assets/httplb_pool_add_create.png
 
-To configure the origin pool we'll add a pool name, followed by a set of config options for the pool. First of all, give pool a name. 
+To configure the origin pool we'll add a pool name, followed by a set of config options for the pool. First, let's give this pool a name. 
 
 .. figure:: assets/httplb_pool_name.png
 
@@ -138,7 +153,7 @@ Now click **Add Item** to start configuring an origin server.
 Let's now configure origin server. First open the drop-down menu to specify the type of origin server. For this demo select **K8s Service Name of Origin Server on given Sites**. 
 Then specify service name indicating the service we deployed in the corresponding namespace. Please note that it follows the format of **servicename.namespace**. We use **star-ratings-app.github** for this demo.
 After that we need to select the **Virtual Site** type and select **shared/ves-io-all-res**. 
-And the last step to configure the origin server is specifying network on the site. Select **vK8s Network on Site**.
+Finally, the last step to configure the origin server is specifying network on the site. Select **vK8s Network on Site**.
 Complete by clicking **Add Item**.
 
 .. figure:: assets/httplb_pool_origin_configure.png
@@ -159,7 +174,7 @@ Take a look at the load balancer configuration and finish creating it by clickin
 
 .. figure:: assets/httplb_save_and_exit.png
 
-We will need CNAME record for the use-cases to run attacks on our app. As for creating CNAME record for your domain, there are several ways to proceed: you can delegate your DNS domain to F5 Distributed Cloud Services. You can take a look at how to do it here:  `Domain Delegation <https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation>`_. You can also attach your record to CNAME, or just use the generated CNAME value as shown in the image below:
+We will need a CNAME record in order to generate traffic and to run attacks on our app. For the purposes of this guide, you can use the generated CNAME value as shown in the image below. However, should you want to use your own domain, you can; there are several ways that you can delegate your DNS domain to F5 Distributed Cloud Services. A refernece on how to do so is here:  `Domain Delegation <https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation>`_.
 
 .. figure:: assets/httplb_cname.png
 
@@ -167,9 +182,22 @@ Now let's open the website to see if it's working. You can use CNAME or your dom
 
 .. figure:: assets/website.png
 
+Great, your sample app should be live and you should be ready to go through the WAAP use-cases.
+
+PATH 2: Automated Config of the Demo Environment Configuration via Ansible
+#############################################################################
+
+Follow the `README <./ansible/README.md>`_ to configure the Ansible environment. You will need to configure the required Ansible Galaxy collections, tokens, and also update the *playbook.yaml* section in the beginning of the playbook that captures xC environment settings.
+
+Once configured, we recommend you review *playbook.yaml* sections, and pick those you'd like to run (such as environment setup), and comment out the rest. Of course, you can choose to run the entire playbook -- that will go through and do all of the setup & demo config steps automatically from beginning to end. 
+
+Thus, we suggest you comment out the *WAAP use-case demo steps* section and those that follow in the *playbook*, and then decide if you want to run through the WAAP use-cases below manually, or use Ansible to do the config by uncommenting the relevant sections. 
+
 
 WAAP Use-Case Demos
 ####################
+
+At this point, whether you used the manual approach in *PATH 1* or Ansible automation in *PATH 2*, you should have a working sample app. You can now start running through the WAAP use-cases. Again, you can follow the steps below to proceed with the use-cases manually, or you may choose to use corresponding sections in the Ansible guide to automate what's done manually. 
 
 APP Protection
 **************
@@ -182,7 +210,7 @@ In the **App Protection** use-case we will see how easy it is to create an effec
 
 First, let's test our app and see if it's vulnerable to attacks. For that we are going to use Test Tool which sends attacks to the apps based on its CNAME. 
 
-Follow the link  `<https://test-tool.sr.f5-demo.com>`_, then paste the CNAME copied one step before and click **SEND ATTACKS**. In the box under it you will see attack types and site status - our app is vulnerable to them. Now let's go ahead and protect the app by creating and configuring Firewall. Then we will test the app once again to see the result of protection.
+Follow the link `<https://test-tool.sr.f5-demo.com>`_, then paste the CNAME copied one step before and click **SEND ATTACKS**. In the box under it you will see attack types and site status - our app is vulnerable to them. Now let's go ahead and protect the app by creating and configuring Firewall. Then we will test the app once again to see the result of protection.
 
 .. figure:: assets/test_waf_1.png
 
@@ -221,7 +249,7 @@ Next, we will specify detection settings. Default settings are recommended for m
 
 .. figure:: assets/waf_detection_custom.png
 
-Select **Custom** attack type in the drop-down menu and proceed to specifying **Disabled Attack Types**. Select **Command Execution** attack type. Command execution is an attack against web applications that aims at the Operating system commands to gain access to it. 
+Select **Custom** attack type in the drop-down menu and proceed to specifying **Disabled Attack Types**. Select **Command Execution** attack type. Command execution is an attack against web applications that targets Operating System commands to gain access to it. 
 
 .. figure:: assets/waf_attack_types.png
 
@@ -244,7 +272,6 @@ Now that we’re done with all the settings, just click **Continue**.
 Click **Save and Exit** to save the HTTP Load Balancer settings.
 
 .. figure:: assets/waf_save_lb.png
-
 
 Now we are ready to test and see if our app is still vulnerable to the attacks. Follow the link  `<https://test-tool.sr.f5-demo.com>`_, and click **SEND ATTACKS**. In the box under it you will see attack types and their statuses - they are now all blocked and our app is safe. 
 
@@ -272,7 +299,7 @@ After having a look at the attack, it is possible to block the client. To do tha
 
 F5 Distributed Cloud WAF provides security through Malicious User Detection as well. Malicious User Detection helps identify and rank suspicious (or potentially malicious) users. Security teams are often burdened with alert fatigue, long investigation times, missed attacks, and false positives. Retrospective security through Malicious User Detection allows security teams to filter noise and to identify actual risks and threats through actionable intelligence, without manual intervention.
 
-WAF rules hit, forbidden access attempts, login failures, request and error rates create a timeline of events that can suggest malicious activity. Users exhibiting suspicious behavior can be automatically blocked, and exceptions can be made through allow lists.
+WAF rules hit, forbidden access attempts, login failures, request and error rates -- al create a timeline of events that can suggest malicious activity. Users exhibiting suspicious behavior can be automatically blocked, and exceptions can be made through allow lists.
 
 The screenshot below represents how the malicious user can look like.
 
@@ -549,6 +576,9 @@ In the screenshot below you can see the analytics for our simulated traffic and 
 
 .. figure:: assets/ddos_demo_2.png
 
-So, we've configured and applied F5 Distributed Cloud WAAP services to our sample app to see how easily they can protect it. We tested and then looked at analytics. 
+Wrap-Up
+#######
 
-Use F5 Distributed Cloud WAAP if you want the same for yourself and your organization!
+At this stage you should have set up a sample app and sent traffic to it. You've configured and applied F5 Distributed Cloud WAAP services in order to protect both the Web & API of the app from malicious actors & bots. We also looked at the telemetry and insights from the data in the various Dashboards & security events.
+
+We hope you have a better understanding of the F5 Distributed Cloud WAAP services and are now ready to implement it for your own organization. Should you have any issues or quesitons, please feel free to raise them via GitHub. Thank you!
