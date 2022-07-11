@@ -263,3 +263,42 @@
                 javascript_location: "AFTER_HEAD"
               js_download_path: "/common.js"
             timeout: 1000
+
+    - name: update load balancer with ddos configuration
+      http_loadbalancer:
+        state: present
+        patch: True
+        metadata:
+          namespace: "{{ namespace }}"
+          name: "{{ prefix }}-lb"
+        spec:
+          api_rate_limit: null
+          disable_rate_limit: null
+          rate_limit:
+            rate_limiter:
+              total_number: 10
+              unit: "SECOND"
+              burst_multiplier: 5
+            no_ip_allowed_list:
+            no_policies:
+          ddos_mitigation_rules:
+            - metadata:
+                name: "ddos-rule"
+              block:
+              ip_prefix_list:
+                ip_prefixes:
+                  - "203.0.113.0/24"
+              expiration_timestamp: "2023-01-01T12:00:00Z"
+          multi_lb_app: null
+          single_lb_app:
+            enable_discovery:
+              enable_learn_from_redirect_traffic:
+            enable_ddos_detection:
+            enable_malicious_user_detection:
+          enable_ip_reputation:
+            ip_threat_categories:
+              - "SPAM_SOURCES"
+              - "DENIAL_OF_SERVICE"
+              - "PROXY"
+              - "TOR_PROXY"
+              - "BOTNETS"
