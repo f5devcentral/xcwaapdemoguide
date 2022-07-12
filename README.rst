@@ -174,7 +174,7 @@ Take a look at the load balancer configuration and finish creating it by clickin
 
 .. figure:: assets/httplb_save_and_exit.png
 
-We will need a CNAME record in order to generate traffic and to run attacks on our app. For the purposes of this guide, you can use the generated CNAME value as shown in the image below. However, should you want to use your own domain, you can; there are several ways that you can delegate your DNS domain to F5 Distributed Cloud Services. A refernece on how to do so is here:  `Domain Delegation <https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation>`_.
+We will need a CNAME record in order to generate traffic and to run attacks on our app. For the purposes of this guide, you can use the generated CNAME value as shown in the image below. However, should you want to use your own domain, you can; there are several ways that you can delegate your DNS domain to F5 Distributed Cloud Services. A reference on how to do so is here:  `Domain Delegation <https://docs.cloud.f5.com/docs/how-to/app-networking/domain-delegation>`_.
 
 .. figure:: assets/httplb_cname.png
 
