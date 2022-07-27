@@ -30,7 +30,7 @@ The demo is intended to be self-sufficient as a quick way to onramp onto xC plat
 
 *App docker container*: contains the Start Ratings app that consists of a simple backend service that exposes and API, and a front-end that consumes the API. 
 
-*Tools service*: contains scripts & utilities in a simple web-based service that will accept sample app URL, stop/start user & attack traffic, stop/start bot attacks, etc.
+*Tools service*: contains scripts & utilities in a simple web-based service that will accept a URL only for the Star Ratings sample app (i.e. not another app/website), and can be used to stop/start user & attack traffic, stop/start bot attacks, etc. In the scope of this guide is to create an HTTP load balancer without a domain nam, however, should you want to use a domain and HTTPS you can do so by choosing an HTTPS load balancer instead of HTTP and then use auto-cert/attach your own certificate and point domain name to the load balancer in the steps below.
 
 .. figure:: assets/waap_overview.png
 
