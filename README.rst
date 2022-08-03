@@ -528,6 +528,10 @@ Click **Edit Configuration** to start editing the load balancer.
 
 .. figure:: assets/ddos_lb_edit.png
 
+Enable showing advanced fields in order to configure IP reputation.
+
+.. figure:: assets/adv_field.png
+
 Enable **IP Reputation** and choose IP threat categories. We select **Spam Sources, Denial of service, Anonymous Proxies, Tor Proxy** and **Botnets** for this demo.
 
 .. figure:: assets/ddos_ip_reputation.png
