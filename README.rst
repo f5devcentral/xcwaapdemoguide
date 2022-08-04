@@ -385,7 +385,7 @@ Scroll down to **Advanced Match** section and click **Configure** for the API Gr
 
 .. figure:: assets/api_definition_rules_api_matcher.png
 
-Enable **Show Advanced Fields**. In the API Group Matcher screen, select an exact value. 
+In the API Group Matcher screen, select an exact value. 
 
 .. figure:: assets/api_definition_rules_matcher_select_api_def.png
 
