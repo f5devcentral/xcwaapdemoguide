@@ -1,4 +1,4 @@
-https://github.com/f5devcentral/xcwaapdemoguide#create-virtual-kubernetes-vk8s-cluster==================================================
+==================================================
 
 .. contents:: Table of Contents
 
@@ -508,7 +508,7 @@ Navigate to the **Bot Defense** tab. Here we will see key info breaking down: wh
 
 .. figure:: assets/bot_dashboard_1.png
 
-Then move on to the **Bot Traffic Overview** tab. Here we can go into detail on the HTTP Load Balancer traffic from the point of view of Bot traffic analytics. From transactions per minute for a specified timeframe, to detail of every HTTP request with inference of whether it is a legitimate user or automation traffic.
+Then move on to the **Security Events** tab. Here we can go into detail on the HTTP Load Balancer traffic from the point of view of Bot traffic analytics. From transactions per minute for a specified timeframe, to detail of every HTTP request with inference of whether it is a legitimate user or automation traffic.
 
 .. figure:: assets/bot_dashboard_2.png
 
