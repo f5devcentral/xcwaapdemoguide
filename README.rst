@@ -1,4 +1,4 @@
-==================================================
+https://github.com/f5devcentral/xcwaapdemoguide#create-virtual-kubernetes-vk8s-cluster==================================================
 
 .. contents:: Table of Contents
 
@@ -30,7 +30,7 @@ The demo is intended to be self-sufficient as a quick way to onramp onto xC plat
 
 *App docker container*: contains the Start Ratings app that consists of a simple backend service that exposes and API, and a front-end that consumes the API. 
 
-*Tools service*: contains scripts & utilities in a simple web-based service that will accept a URL only for the Star Ratings sample app (i.e. not another app/website), and can be used to stop/start user & attack traffic, stop/start bot attacks, etc. In the scope of this guide is to create an HTTP load balancer without a domain nam, however, should you want to use a domain and HTTPS you can do so by choosing an HTTPS load balancer instead of HTTP and then use auto-cert/attach your own certificate and point domain name to the load balancer in the steps below.
+*Tools service*: contains scripts & utilities in a simple web-based service that will accept a URL only for the Star Ratings sample app (i.e. not another app/website), and can be used to stop/start user & attack traffic, stop/start bot attacks, etc. In the scope of this guide is to create an HTTP load balancer without a domain name, however, should you want to use a domain and HTTPS you can do so by choosing an HTTPS load balancer instead of HTTP and then use auto-cert/attach your own certificate and point domain name to the load balancer in the steps below.
 
 .. figure:: assets/waap_overview.png
 
@@ -42,7 +42,7 @@ Pre-requisites
 
 *PATH 1: Manual Configuration* 
 
-- A Web browser to acces the F5 Distributed Cloud console
+- A Web browser to access the F5 Distributed Cloud console
 - The command-line interface (cli) Kubernetes management tool: `kubectl <https://kubernetes.io/docs/tasks/tools/#kubectl>`_
 
 *PATH 2: Automated Configuration*
@@ -94,7 +94,7 @@ The Kubeconfig will be downloaded with the default certificate expiration date. 
 
 For the next step you need to have the `kubectl tool <https://kubernetes.io/docs/tasks/tools/#kubectl>`_.
 
-In your client environemtn, open the command line interface (cli) and run the **kubectl** tool to execute a command to deploy the sample app. Type the path to the downloaded credentials file for the kubeconfig parameter. **vk8s-manifest.yaml** you can find in this project repository.
+In your client environment, open the command line interface (cli) and run the **kubectl** tool to execute a command to deploy the sample app. Type the path to the downloaded credentials file for the kubeconfig parameter. **vk8s-manifest.yaml** you can find in this project repository.
 
 ```
 kubectl --kubeconfig {{ path to the credentials file  }} apply -f vk8s-manifest.yaml
@@ -257,7 +257,7 @@ The next property **Signature Selection by Accuracy** allows us to disable some 
 
 .. figure:: assets/waf_signature.png
 
-After that we will edit Disabled Violatation list. This enables detection of various violation types like malformed data and illegal filetypes. For this use-case, we will select **Custom** violations, and then specify **Bad HTTP Version**. 
+After that we will edit Disabled Violations list. This enables detection of various violation types like malformed data and illegal filetypes. For this use-case, we will select **Custom** violations, and then specify **Bad HTTP Version**. 
 
 .. figure:: assets/waf_violatations.png
 
@@ -299,7 +299,7 @@ After having a look at the attack, it is possible to block the client. To do tha
 
 F5 Distributed Cloud WAF provides security through Malicious User Detection as well. Malicious User Detection helps identify and rank suspicious (or potentially malicious) users. Security teams are often burdened with alert fatigue, long investigation times, missed attacks, and false positives. Retrospective security through Malicious User Detection allows security teams to filter noise and to identify actual risks and threats through actionable intelligence, without manual intervention.
 
-WAF rules hit, forbidden access attempts, login failures, request and error rates -- al create a timeline of events that can suggest malicious activity. Users exhibiting suspicious behavior can be automatically blocked, and exceptions can be made through allow lists.
+WAF rules hit, forbidden access attempts, login failures, request and error rates -- all create a timeline of events that can suggest malicious activity. Users exhibiting suspicious behavior can be automatically blocked, and exceptions can be made through allow lists.
 
 The screenshot below represents how the malicious user can look like.
 
@@ -425,7 +425,7 @@ Take a look at the rules created and click **Apply**.
 
 .. figure:: assets/api_definition_rule_list_apply.png
 
-Click **Continue** to add the the service policy to the load balancer and then **Apply**.
+Click **Continue** to add the service policy to the load balancer and then **Apply**.
 
 .. figure:: assets/api_definition_continue.png
 
@@ -585,4 +585,4 @@ Wrap-Up
 
 At this stage you should have set up a sample app and sent traffic to it. You've configured and applied F5 Distributed Cloud WAAP services in order to protect both the Web & API of the app from malicious actors & bots. We also looked at the telemetry and insights from the data in the various Dashboards & security events.
 
-We hope you have a better understanding of the F5 Distributed Cloud WAAP services and are now ready to implement it for your own organization. Should you have any issues or quesitons, please feel free to raise them via GitHub. Thank you!
+We hope you have a better understanding of the F5 Distributed Cloud WAAP services and are now ready to implement it for your own organization. Should you have any issues or questions, please feel free to raise them via GitHub. Thank you!
