@@ -250,8 +250,8 @@
                 - metadata:
                     name: "{{ prefix }}-bot-defense"
                   http_methods:
-                    - "PUT"
-                    - "POST"
+                    - "METHOD_PUT"
+                    - "METHOD_POST"
                   protocol: "BOTH"
                   path:
                     prefix: "/api/v1/"
