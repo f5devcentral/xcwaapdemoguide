@@ -525,11 +525,11 @@ Click **Edit Configuration** to start editing the load balancer.
 .. figure:: assets/ddos_lb_edit.png
 
 
-Enable **IP Reputation** and choose IP threat categories. We select **Spam Sources, Denial of service, Anonymous Proxies, Tor Proxy** and **Botnets** for this demo.
+In the **Common Security Controls** section enable **IP Reputation** and choose IP threat categories. We select **Spam Sources, Denial of service, Anonymous Proxies, Tor Proxy** and **Botnets** for this demo.
 
 .. figure:: assets/ddos_ip_reputation.png
 
-In order to configure rate limiting, select **Custom Rate Limiting Parameters** in the drop-down menu of rate limiting and click **Configure**.
+In order to configure rate limiting, select **Custom Rate Limiting Parameters** in the drop-down menu of rate limiting and click **View Configuration**.
 
 .. figure:: assets/ddos_rate_limiting_select.png
 
@@ -537,19 +537,16 @@ First specify number, then burst multiplier. For this use-case we specify **10**
 
 .. figure:: assets/ddos_rate_limit_config.png
 
-After that select **Single Load Balancer Application** and enable DDoS detection in the drop-down menu.
+In the **DoS Protection** section enable DDoS detection in the drop-down menu and click **Configure** to add a new rule.
 
 .. figure:: assets/ddos_detection.png
 
-Click **Configure** in the **DDoS Mitigation Rules** section to add a new rule.
-
-.. figure:: assets/ddos_mitigation_select.png
 
 Next click the **Add Item** button to open the form where we will create an ‘IP Source’ mitigation rule.
 
 .. figure:: assets/ddos_mitigation_add.png
 
-Give rule a name, specify IP we want to block - **203.0.113.0/24** and indicate the expiration time stamp. Finally, click the **Add Item** which will create our DDoS Mitigation rule.
+Give rule a name, specify IP we want to block - **203.0.113.0/24** and indicate the expiration time stamp. Finally, click the **Apply** which will create our DDoS Mitigation rule.
 
 .. figure:: assets/ddos_mitigation_rule.png
 
