@@ -462,7 +462,7 @@ Click **Edit Configuration** to start editing the load balancer.
 
 .. figure:: assets/bot_lb_edit.png
 
-Go to the **Security Configuration** section and enable Bot Defense by selecting **Specify Bot Defense Configuration** in the drop-down menu. The Regional Endpoint is **US** due to its closer proximity to our sample app user base. Click **Configure** to configure Bot Defense Policy.
+Go to the **Bot Protection** section and enable Bot Defense. The Regional Endpoint is **US** due to its closer proximity to our sample app user base. Click **Configure** to configure Bot Defense Policy.
 
 .. figure:: assets/bot_config.png
 
@@ -476,7 +476,7 @@ Click **Add Item** to start adding an endpoint.
 
 Name the endpoint and then select HTTP Methods. Let's pick **PUT** and **POST** for this demo. Scroll down and fill in the path - **/api/v1/**.
 Then set Bot Traffic Mitigation options to **Block** action for identified bot traffic, and select **403 Forbidden** status. 
-Go ahead and click **Add Item** to complete the App Endpoint setup.
+Go ahead and click **Apply** to complete the App Endpoint setup.
 
 .. figure:: assets/bot_full_config.png
 
@@ -524,9 +524,6 @@ Click **Edit Configuration** to start editing the load balancer.
 
 .. figure:: assets/ddos_lb_edit.png
 
-Enable showing advanced fields in order to configure IP reputation.
-
-.. figure:: assets/adv_field.png
 
 Enable **IP Reputation** and choose IP threat categories. We select **Spam Sources, Denial of service, Anonymous Proxies, Tor Proxy** and **Botnets** for this demo.
 
