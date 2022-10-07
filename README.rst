@@ -69,7 +69,7 @@ Now let's fill in the form. First, give the vK8s a name.
 
 .. figure:: assets/vk8s_cluster_name.png
 
-And then click the **Select Vsite Ref** button to assign Virtual Sites. Vsite Ref is the virtual-site reference of locations on the F5 Global Network where vK8s will be instantiated. 
+And then click the **Add Item** button to assign Virtual Sites. Vsite Ref is the virtual-site reference of locations on the F5 Global Network where vK8s will be instantiated. 
 
 .. figure:: assets/vk8s_cluster_vsite_ref.png
 
@@ -138,7 +138,7 @@ After that let's create a new origin pool, which will be used in our load balanc
 
 .. figure:: assets/httplb_pool_add.png
 
-Then open the drop-down menu and click **Create new Origin Pool**.
+Then open the drop-down menu and click **Add Item**.
 
 .. figure:: assets/httplb_pool_add_create.png
 
@@ -154,7 +154,7 @@ Let's now configure origin server. First open the drop-down menu to specify the 
 Then specify service name indicating the service we deployed in the corresponding namespace. Please note that it follows the format of **servicename.namespace**. We use **star-ratings-app.github** for this demo.
 After that we need to select the **Virtual Site** type and select **shared/ves-io-all-res**. 
 Finally, the last step to configure the origin server is specifying network on the site. Select **vK8s Network on Site**.
-Complete by clicking **Add Item**.
+Complete by clicking **Apply**.
 
 .. figure:: assets/httplb_pool_origin_configure.png
 
@@ -166,7 +166,7 @@ Then just click **Continue** to move on.
 
 .. figure:: assets/httplb_pool_continue.png
 
-Once done, click **Add Item** to apply the origin pool to the load balancer configuration. This will return to the load balancer configuration form.
+Once done, click **Apply** to apply the origin pool to the load balancer configuration. This will return to the load balancer configuration form.
 
 .. figure:: assets/httplb_pool_confirm.png
 
@@ -233,7 +233,7 @@ Click **Edit Configuration** in the right top corner to start editing the HTTP l
 
 .. figure:: assets/httplb_edit.png
 
-In the **Security Configuration** section first enable **App Firewall** in the drop-down menu, and then click **Create new App Firewall** to configure a new WAF object.
+In the **Web Application Firewall** section first enable **App Firewall** in the drop-down menu, and then click **Add Item** to configure a new WAF object.
 
 .. figure:: assets/waf_create.png
 
@@ -331,7 +331,7 @@ Now over to creating API Definition. Navigate to **API Definition** and then cli
 
 .. figure:: assets/api_definition_navigate.png
 
-Enter a name in the metadata section. Then go to **Swagger Specs** section and click on the **Enter swagger specs** field. Select the swagger spec added earlier, then click **Save and Exit** to create API definition object.
+Enter a name in the metadata section. Then go to **Swagger Specs** section and open the drop-down menu. Select the swagger spec added earlier, then click **Save and Exit** to create API definition object.
 
 .. figure:: assets/api_definition_create.png
 
