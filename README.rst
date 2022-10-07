@@ -343,11 +343,7 @@ Click **Edit Configuration** to start editing.
 
 .. figure:: assets/api_definition_lb_edit.png
 
-Go to the **Security Configuration** section and enable the **Show Advanced Fields** option.
-
-.. figure:: assets/api_definition_advanced.png
-
-In the **API Definition** section select **Use API Definition** and then select the API Definition created earlier. 
+In the **API Protection** section enable **API Definition** and then select the API Definition created earlier. 
 
 .. figure:: assets/api_definition_select_api_def.png
 
