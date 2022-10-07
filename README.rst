@@ -349,11 +349,11 @@ In the **API Protection** section enable **API Definition** and then select the 
 
 Now we need to a create a new Service Policy with a set of Custom Rules that will specify either an Allow or Deny rule action for specific API resources contained in our Swagger file. This approach uses the combination of Service Policies and Custom Rules to fine-tune and provide granular control over how our application API resources are protected.
 
-Scroll up to the **Service Policies** section and select **Apply Specified Service Policies**. Then click **Configure**. 
+Scroll to the **Common Security Controls** section and select **Apply Specified Service Policies**. Then click **Configure**. 
 
 .. figure:: assets/api_definition_policy.png
 
-Click on the **Select Service Policy** field and select **Create new Service Policy** option.
+Click on the **Select Item** field and select **Add Item** option.
 
 .. figure:: assets/api_definition_policy_create.png
 
@@ -365,7 +365,7 @@ Let's now add rules: click **Add Item**.
    
 .. figure:: assets/api_definition_rule_add.png
 
-The first rule will deny all except the API. Enter a name in the metadata section and click **Configure** in the Rule Specification section. 
+The first rule will deny all except the API. Enter a name in the metadata section and click **View Configuration** in the Rule Specification section. 
 
 .. figure:: assets/api_definition_rule_add_details.png
 
@@ -393,7 +393,7 @@ Tick the **Invert String Matcher** option and click **Apply** to add the matcher
 
 .. figure:: assets/api_definition_policy_apply.png
 
-Click **Add Item** to add the rule.
+Click **Apply** to add the rule.
 
 .. figure:: assets/api_definition_add_rule.png
 
@@ -401,7 +401,7 @@ Create one more rule to 'allow-other' using the **Add Item** option in the rules
 
 .. figure:: assets/api_definition_second_rule.png
 
-Enter a name in the metadata section and click **Configure** in the Rule Specification section.
+Enter a name in the metadata section and click **View Configuration**.
    
 .. figure:: assets/api_definition_second_rule_details.png
 
@@ -413,7 +413,7 @@ Click **Apply** to add the rule specification.
 
 .. figure:: assets/api_definition_second_rule_apply.png
 
-Click **Add Item** to add the second rule.
+Click **Apply** to add the second rule.
 
 .. figure:: assets/api_definition_second_rule_add.png
 
