@@ -30,11 +30,12 @@ The demo is intended to be self-sufficient as a quick way to onramp onto xC plat
 
 *App docker container*: contains the Start Ratings app that consists of a simple backend service that exposes and API, and a front-end that consumes the API. 
 
-*Test Tool*: web-based service that contains purpose-built scripts & utilities for testing the status of the WAAP for the **deployed sample app** only. 
-| **NOTE: the tool is a utility for this WAAP Demo Guide only, 
-| it will only accept a URL with a valid Star Ratings sample app deployment,
-| and this deployment must be hosted on F5 Distributed Cloud (hostname ending in '.ac.vh.ves.io'). 
-| This tool cannot be used to run tests on any other website / web app outside of this Demo Guide.
+*Test Tool*: web-based service that contains purpose-built scripts & utilities for testing the status of the WAAP for the **deployed sample app** only.
+
+**NOTE: the tool is a utility for this WAAP Demo Guide only, 
+it will only accept a URL with a valid Star Ratings sample app deployment,
+and this deployment must be hosted on F5 Distributed Cloud (hostname ending in '.ac.vh.ves.io'). 
+This tool cannot be used to run tests on any other website / web app outside of this Demo Guide.**
 
 The Test tool can be used to stop/start waf testing, stop/start bot testing, and check WAAP / Bot Defense protection status. In the scope of this guide is to create an HTTP load balancer without a domain name, in order to avoid issues with custom domains outside of the auto-generated .ac.vh.ves.io host.
 
