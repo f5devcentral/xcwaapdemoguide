@@ -217,7 +217,7 @@ In the **App Protection** use-case we will see how easy it is to create an effec
 
 First, let's test our app and see if it's vulnerable to attacks. For that we are going to use Test Tool which sends attacks to the apps based on its CNAME. 
 
-Follow the link `<https://test-tool.sr.f5-demo.com>`_, then paste the CNAME copied one step before and click **SEND ATTACKS**. In the box under it you will see attack types and site status - our app is vulnerable to them. Now let's go ahead and protect the app by creating and configuring Firewall. Then we will test the app once again to see the result of protection.
+Follow the link `<https://test-tool.sr.f5-cloud-demo.com>`_, then paste the CNAME copied one step before and click **SEND ATTACKS**. In the box under it you will see attack types and site status - our app is vulnerable to them. Now let's go ahead and protect the app by creating and configuring Firewall. Then we will test the app once again to see the result of protection.
 
 .. figure:: assets/test_waf_1.png
 
@@ -280,7 +280,7 @@ Click **Save and Exit** to save the HTTP Load Balancer settings.
 
 .. figure:: assets/waf_save_lb.png
 
-Now we are ready to test and see if our app is still vulnerable to the attacks. Follow the link  `<https://test-tool.sr.f5-demo.com>`_, and click **SEND ATTACKS**. In the box under it you will see attack types and their statuses - they are now all blocked and our app is safe. 
+Now we are ready to test and see if our app is still vulnerable to the attacks. Follow the link  `<https://test-tool.sr.f5-cloud-demo.com>`_, and click **SEND ATTACKS**. In the box under it you will see attack types and their statuses - they are now all blocked and our app is safe. 
 
 .. figure:: assets/test_waf_2.png
 
@@ -320,7 +320,7 @@ Protecting API resources is a critical piece of a holistic application security 
 
 Without API protection all traffic goes directly to the server and can be harmful. Let's take a look at an attack on our sample app and then protect its API.
 
-Go back to the Test Tool  `<https://test-tool.sr.f5-demo.com>`_, and switch to the **API Security in Action** tab. Then click **SEND ATTACKS**. In the box under it you will see the status which shows that API is vulnerable. Now let's go ahead and protect API.
+Go back to the Test Tool  `<https://test-tool.sr.f5-cloud-demo.com>`_, and switch to the **API Security in Action** tab. Then click **SEND ATTACKS**. In the box under it you will see the status which shows that API is vulnerable. Now let's go ahead and protect API.
 
 .. figure:: assets/test_api_1.png
 
@@ -440,7 +440,7 @@ The last step is to look the configuration through and save the edited HTTP load
 
 Well done! The API of our sample Rating App is protected based on the spec in the uploaded Swagger file. Let's try and see that the access is forbidden.
 
-Go back to the Test Tool  `<https://test-tool.sr.f5-demo.com>`_, and click **SEND ATTACKS**. In the box under it we will see **protected** status, so our API is safe now.  
+Go back to the Test Tool  `<https://test-tool.sr.f5-cloud-demo.com>`_, and click **SEND ATTACKS**. In the box under it we will see **protected** status, so our API is safe now.  
 
 .. figure:: assets/test_api_2.png
 
@@ -457,7 +457,7 @@ Bot Protection
 
 F5 Distributed Cloud Bot Defense helps us identify attacks and allow us then to easily block them! Our sample rating app could definitely benefit from Distributed Cloud Bot Defense. So let’s see how easy it actually is to set up and use the service!
 
-First let's generate some bot traffic to our app. Go back to the Test Tool  `<https://test-tool.sr.f5-demo.com>`_, and switch to the **Bot Defense in Action** tab. Click **GENERATE BOT TRAFFIC**. In the box under it we will see that all the bot traffic passed. Now let's go ahead and block it by setting up a resilient anti-automation solution that will be attached to the HTTP Load Balancer that processes the traffic to our app. We will then test it to see how Bot Protection works.
+First let's generate some bot traffic to our app. Go back to the Test Tool  `<https://test-tool.sr.f5-cloud-demo.com>`_, and switch to the **Bot Defense in Action** tab. Click **GENERATE BOT TRAFFIC**. In the box under it we will see that all the bot traffic passed. Now let's go ahead and block it by setting up a resilient anti-automation solution that will be attached to the HTTP Load Balancer that processes the traffic to our app. We will then test it to see how Bot Protection works.
 
 .. figure:: assets/test_bot_1.png
 
@@ -499,7 +499,7 @@ To complete the configuration of load balancer, click **Save and Exit**.
 
 .. figure:: assets/bot_lb_save.png
 
-Now we can test and see the end-result of our setup. Go back to the Test Tool  `<https://test-tool.sr.f5-demo.com>`_, and click **GENERATE BOT TRAFFIC**. This time we will see **blocked** status.  
+Now we can test and see the end-result of our setup. Go back to the Test Tool  `<https://test-tool.sr.f5-cloud-demo.com>`_, and click **GENERATE BOT TRAFFIC**. This time we will see **blocked** status.  
 
 .. figure:: assets/test_bot_2.png
 
