@@ -116,7 +116,7 @@ Set up the HTTP Load Balancer
 
 Next, we will need to make our sample app workload accessible by configuring HTTP Load Balancing settings for our app. We will create an origin pool for the services. Origin pools consist of endpoints and clusters, as well as routes and advertising policies that are required to make the application available to the internet.
 
-Back in the F5 Distributed Cloud Console navigate to  the **Load Balancers** service in the service menu. 
+Back in the F5 Distributed Cloud Console navigate to  the **Multi-Cloud App Connect** service in the service menu. 
 
 .. figure:: assets/load_balancer_navigate.png
    :width: 600px
@@ -268,7 +268,7 @@ After that we will edit Disabled Violations list. This enables detection of vari
 
 .. figure:: assets/waf_violatations.png
 
-Next we will specify blocking response page. To do that, enable the advanced fields configuration. Then select **Custom** and indicate **403 Forbidden** as response code. By default the Distributed Cloud WAF looks for specific query parameters like "card" or "password" to prevent potentially sensitive information such as account credentials or credit card numbers from appearing in security logs. This can be customized through a Blocking Response Page that can include a custom body in ASCII or base64.
+Next we will specify blocking response page. To do that, select **Custom** and indicate **403 Forbidden** as response code. By default the Distributed Cloud WAF looks for specific query parameters like "card" or "password" to prevent potentially sensitive information such as account credentials or credit card numbers from appearing in security logs. This can be customized through a Blocking Response Page that can include a custom body in ASCII or base64.
 
 .. figure:: assets/waf_adv_config.png
 
@@ -284,7 +284,7 @@ Now we are ready to test and see if our app is still vulnerable to the attacks. 
 
 .. figure:: assets/test_waf_2.png
 
-Next let’s look at some of the visibility and security insights provided by F5 Distributed Cloud WAAP. Navigate to **Security** and click on our load balancer.
+Next let’s look at some of the visibility and security insights provided by F5 Distributed Cloud WAAP. Navigate to **Dashboards**, select **Security Dashboard** and click on our load balancer.
 
 .. figure:: assets/waf_dashboard_navigate.png
 
@@ -372,7 +372,7 @@ Let's now add rules: click **Add Item**.
    
 .. figure:: assets/api_definition_rule_add.png
 
-The first rule will deny all except the API. Enter a name in the metadata section and click **View Configuration** in the Rule Specification section. 
+The first rule will deny all except the API. Enter a name in the metadata section and scroll down. 
 
 .. figure:: assets/api_definition_rule_add_details.png
 
@@ -408,11 +408,11 @@ Create one more rule to 'allow-other' using the **Add Item** option in the rules
 
 .. figure:: assets/api_definition_second_rule.png
 
-Enter a name in the metadata section and click **View Configuration**.
+First, enter a name in the metadata section.
    
 .. figure:: assets/api_definition_second_rule_details.png
 
-Select **Allow** for Action field in the Action section.
+Next, select **Allow** for Action field in the Action section.
 
 .. figure:: assets/api_definition_second_rule_allow.png
 
@@ -503,7 +503,7 @@ Now we can test and see the end-result of our setup. Go back to the Test Tool  `
 
 .. figure:: assets/test_bot_2.png
 
-Now let’s have a look at the Security analytics for the HTTP Load Balancer where we configured Bot Defense. Navigate to **Security** and click on the load balancer name.
+Now let’s have a look at the Security analytics for the HTTP Load Balancer where we configured Bot Defense. Navigate to **Dashboards**, then **Security Dashboard** and click on the load balancer name.
 
 .. figure:: assets/bot_dashboard_0.png
 
