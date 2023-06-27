@@ -158,7 +158,7 @@ Now click **Add Item** to start configuring an origin server.
 .. figure:: assets/httplb_pool_origin_add.png
 
 Let's now configure origin server. First open the drop-down menu to specify the type of origin server. For this demo select **K8s Service Name of Origin Server on given Sites**. 
-Then specify service name indicating the service we deployed in the corresponding namespace. Please note that it follows the format of **servicename.namespace**. We use **star-ratings-app.github** for this demo.
+Then specify service name indicating the service we deployed in the corresponding namespace. Please note that it follows the format of **servicename.namespace**. We use **star-ratings-app.yournamespace** for this demo where **yournamespace** is the name of your namespace. 
 After that we need to select the **Virtual Site** type and select **shared/ves-io-all-res**. 
 Finally, the last step to configure the origin server is specifying network on the site. Select **vK8s Network on Site**.
 Complete by clicking **Apply**.
