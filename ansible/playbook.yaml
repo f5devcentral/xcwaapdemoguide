@@ -224,16 +224,34 @@
         spec:
           no_service_policies: null
           service_policies_from_namespace: null
-          disable_api_definition: null
           active_service_policies:
             policies:
               - tenant: "{{ tenant.name }}"
                 namespace: "{{ namespace }}"
                 name: "{{ prefix }}-policy"
-          api_definition:
-            tenant: "{{ tenant.name }}"
-            namespace: "{{ namespace }}"
-            name: "{{ prefix }}-api-def"
+                king: "service_policy"
+          disable_api_definition: null
+          api_specification:
+            api_definition:
+              tenant: "{{ tenant.name }}"
+              namespace: "{{ namespace }}"
+              name: "{{ prefix }}-api-def"
+              kind: "api_definition"
+            validation_all_spec_endpoints:
+              validation_mode:
+                validation_mode_active:
+                  enforcement_report: {}
+                  request_validation_properties:
+                    - "PROPERTY_PATH_PARAMETERS"
+                    - "PROPERTY_QUERY_PARAMETERS"
+                    - "PROPERTY_HTTP_HEADERS"
+                skip_response_validation: {}
+              fall_through_mode:
+                fall_through_mode_allow: {}
+          enable_api_discovery:
+            enable_learn_from_redirect_traffic: {}
+          disable_api_discovery: null
+
 
     - name: update load balancer with bot defense configuration
       http_loadbalancer:
@@ -252,16 +270,22 @@
                   http_methods:
                     - "METHOD_PUT"
                     - "METHOD_POST"
+                  undefined_flow_label: {}
                   protocol: "BOTH"
+                  any_domain: {}
                   path:
                     prefix: "/api/v1/"
+                  web: {}
                   mitigation:
                     block:
                       status: "Forbidden"
                       body: "string:///VGhlIHJlcXVlc3RlZCBVUkwgd2FzIHJlamVjdGVkLiBQbGVhc2UgY29uc3VsdCB3aXRoIHlvdXIgYWRtaW5pc3RyYXRvci4="
+                  mitigate_good_bots: {}
               js_insert_all_pages:
                 javascript_location: "AFTER_HEAD"
               js_download_path: "/common.js"
+              javascript_mode: "ASYNC_JS_NO_CACHING"
+              disable_mobile_sdk: {}
             timeout: 1000
 
     - name: update load balancer with ddos configuration
@@ -272,15 +296,17 @@
           namespace: "{{ namespace }}"
           name: "{{ prefix }}-lb"
         spec:
-          api_rate_limit: null
           disable_rate_limit: null
           rate_limit:
             rate_limiter:
               total_number: 10
               unit: "SECOND"
               burst_multiplier: 5
-            no_ip_allowed_list:
-            no_policies:
+            no_ip_allowed_list: {}
+            no_policies: {}
+          disable_ddos_detection: null
+          enable_ddos_detection:
+            enable_malicious_user_detection: {}
           ddos_mitigation_rules:
             - metadata:
                 name: "ddos-rule"
@@ -288,17 +314,10 @@
               ip_prefix_list:
                 ip_prefixes:
                   - "203.0.113.0/24"
-              expiration_timestamp: "2023-01-01T12:00:00Z"
-          multi_lb_app: null
-          single_lb_app:
-            enable_discovery:
-              enable_learn_from_redirect_traffic:
-            enable_ddos_detection:
-            enable_malicious_user_detection:
+              expiration_timestamp: "2024-08-01T12:00:00Z"
           enable_ip_reputation:
             ip_threat_categories:
               - "SPAM_SOURCES"
               - "DENIAL_OF_SERVICE"
-              - "PROXY"
               - "TOR_PROXY"
               - "BOTNETS"
