@@ -237,17 +237,7 @@
               namespace: "{{ namespace }}"
               name: "{{ prefix }}-api-def"
               kind: "api_definition"
-            validation_all_spec_endpoints:
-              validation_mode:
-                validation_mode_active:
-                  enforcement_report: {}
-                  request_validation_properties:
-                    - "PROPERTY_PATH_PARAMETERS"
-                    - "PROPERTY_QUERY_PARAMETERS"
-                    - "PROPERTY_HTTP_HEADERS"
-                skip_response_validation: {}
-              fall_through_mode:
-                fall_through_mode_allow: {}
+            validation_disabled: {}
           enable_api_discovery:
             enable_learn_from_redirect_traffic: {}
           disable_api_discovery: null
