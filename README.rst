@@ -292,7 +292,7 @@ Here we will see app dashboard. The dashboard provides detailed info on all the 
 
 .. figure:: assets/waf_dashboard_events.png
 
-Now navigate to **Security Events** and then open one of the security events to drill into it. 
+Now navigate to **Security Analytics** and then open one of the security events to drill into it. 
 
 .. figure:: assets/waf_requests.png
 
@@ -440,6 +440,8 @@ The last step is to look the configuration through and save the edited HTTP load
 
 Well done! The API of our sample Rating App is protected based on the spec in the uploaded Swagger file. Let's try and see that the access is forbidden.
 
+**NOTE**: If you encounter the error message "Resource http_loadbalancer.oas_validation has exhausted limits(0.00)" while attempting to save a Load Balancer, please proceed to open a support ticket in order to request an increase in limits for API schema validation.
+
 Go back to the Test Tool  `<https://test-tool.sr.f5-cloud-demo.com>`_, and click **SEND ATTACKS**. In the box under it we will see **protected** status, so our API is safe now.  
 
 .. figure:: assets/test_api_2.png
@@ -511,7 +513,7 @@ Navigate to the **Bot Defense** tab. Here we will see key info breaking down: wh
 
 .. figure:: assets/bot_dashboard_1.png
 
-Then move on to the **Security Events** tab. Here we can go into detail on the HTTP Load Balancer traffic from the point of view of Bot traffic analytics. From transactions per minute for a specified timeframe, to detail of every HTTP request with inference of whether it is a legitimate user or automation traffic.
+Then move on to the **Security Analytics** tab. Here we can go into detail on the HTTP Load Balancer traffic from the point of view of Bot traffic analytics. From transactions per minute for a specified timeframe, to detail of every HTTP request with inference of whether it is a legitimate user or automation traffic.
 
 .. figure:: assets/bot_dashboard_2.png
 
