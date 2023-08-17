@@ -571,11 +571,15 @@ See how easy that was! This should definitely help with the performance and upti
 
 We have created the service policy to block that malicious IP. Now let’s have a look at the reporting and analytics for the HTTP Load Balancer where we configured the policy for our app. 
 
-Here we can see all of our app's critical security info in one place. Take a look at the **Security Events** section in the screenshot below showing all the events including the DDoS ones. Notice in the **DDoS Security Events** section we now see blocked traffic from the IP address we specified earlier. We can also see the map of security events giving clear visual security event distribution.
+Navigate to the **Dashboards** and proceed to the **Security Dashboard** option. Scroll down and click the load balancer we created. 
+
+.. figure:: assets/bot_dashboard_0.png
+
+The **Dashboard** tab will open. Here we can see all of our app's critical security info in one place. Take a look at the **Security Events** section in the screenshot below showing all the events including the DDoS ones. Notice in the **DDoS Security Events** section we now see blocked traffic from the IP address we specified earlier. We can also see the map of security events giving clear visual security event distribution.
 
 .. figure:: assets/ddos_demo_1.png
 
-In the screenshot below you can see the analytics for our simulated traffic and attacks. See the impact of attacks on each endpoint by hovering over an endpoint on the map. We can also get insights into Top IPs, Regions, ASNs and TLS FPs. 
+Now proceed to the **DDoS** tab. In the screenshot below you can see the analytics for our simulated traffic and attacks. See the impact of attacks on each endpoint by hovering over an endpoint on the map. We can also get insights into Top IPs, Regions, ASNs and TLS FPs. 
 
 .. figure:: assets/ddos_demo_2.png
 
